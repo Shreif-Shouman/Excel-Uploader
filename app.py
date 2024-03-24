@@ -49,19 +49,33 @@ if uploaded_files:
             st.subheader(f"Processed Data for {uploaded_file.name}")
             st.dataframe(adjusted_collected_data)
 
-            # Convert DataFrame to Excel for downloading
+            # Convert DataFrame to Excel for downloading, applying date format
             output = BytesIO()
             with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
                 adjusted_collected_data.to_excel(writer, index=False, sheet_name='Processed Data')
+                
+                # Get the xlsxwriter workbook and worksheet objects
+                workbook = writer.book
+                worksheet = writer.sheets['Processed Data']
+                
+                # Define your date format
+                date_format = workbook.add_format({'num_format': 'dd-mm-yyyy'})
+                
+                # Apply the date format to the date columns
+                # Assuming your date columns are 'Einteildatum' and 'Ladedatum', adjust as necessary
+                date_columns = ['Einteildatum', 'Ladedatum']  # Add or adjust your date column names
+                for column in date_columns:
+                    col_idx = adjusted_collected_data.columns.get_loc(column)  # Get the Excel column index
+                    worksheet.set_column(col_idx + 1, col_idx + 1, None, date_format)  # Apply format, +1 due to Excel indexing
+
                 writer.save()
             processed_data = output.getvalue()
 
             # Download button for each processed file
             st.download_button(label=f'Download Processed Data for {uploaded_file.name}',
-                   data=processed_data,
-                   file_name=f'processed_{uploaded_file.name.replace(".xlsm", ".xls")}',  # Not recommended; just changes extension
-                   mime='application/vnd.ms-excel')
-
+                               data=processed_data,
+                               file_name=f'processed_{uploaded_file.name}',
+                               mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         else:
             st.write(f"No data collected or processed for {uploaded_file.name}.")
 else:
