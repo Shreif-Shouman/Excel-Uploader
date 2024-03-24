@@ -18,9 +18,6 @@ with st.sidebar:
     - Click the 'Download' button next to each file to save the processed data to your device.
     """)
 
-    st.write("## About")
-    st.write("This app was created to streamline the process of consolidating data from multiple Excel files, focusing on specific columns and excluding specified sheets.")
-
     st.write("## Designed by: Shreif Shouman, Bsc.")
 
 # Main page layout
