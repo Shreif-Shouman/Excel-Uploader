@@ -74,7 +74,7 @@ if uploaded_files:
             # Download button for each processed file
             st.download_button(label=f'Download Processed Data for {uploaded_file.name}',
                                data=processed_data,
-                               file_name=f'processed_{uploaded_file.name}',
+                               file_name=f'processed_{uploaded_file.name.replace(".xlsm", ".xls")}',  # Not recommended; just changes extension,
                                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         else:
             st.write(f"No data collected or processed for {uploaded_file.name}.")
