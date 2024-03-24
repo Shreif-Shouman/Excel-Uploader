@@ -21,7 +21,7 @@ with st.sidebar:
         - Once files are uploaded, each file's processed data will be displayed on the page with a corresponding download button.
         - Click the 'Download' button next to each file to save the processed data to your device.
 
-        ## Designed by: Shreif Shouman, Bsc.
+        ## Developer: Shreif Shouman, Bsc.
     """)
 
 # Main content
